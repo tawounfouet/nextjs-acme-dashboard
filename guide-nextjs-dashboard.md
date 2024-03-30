@@ -101,3 +101,18 @@ In this chapter... Here are the topics we’ll cover
 - How Server Components can help you access back-end resources more securely.
 - What network waterfalls are.
 - How to implement parallel data fetching using a JavaScript Pattern.
+
+
+## Chapter 8 - Static and Dynamic Rendering
+
+In the previous chapter, you fetched data for the Dashboard Overview page. However, we briefly discussed two limitations of the current setup:
+
+The data requests are creating an unintentional waterfall.
+The dashboard is static, so any data updates will not be reflected on your application.
+
+
+In this chapter... Here are the topics we’ll cover
+- What static rendering is and how it can improve your application's performance.
+- What dynamic rendering is and when to use it.
+- Different approaches to make your dashboard dynamic.
+- Simulate a slow data fetch to see what happens.
