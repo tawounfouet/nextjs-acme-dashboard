@@ -73,3 +73,31 @@ In this chapter... Here are the topics we’ll cover
 - Set up a Vercel account and link your GitHub repo for instant previews and deployments.
 - Create and link your project to a Postgres database.
 - Seed the database with initial data.
+
+
+```bash
+#Finally, run npm i @vercel/postgres in your terminal to install the Vercel Postgres SDK.
+npm i @vercel/postgres
+
+```
+
+### Seed your database
+
+```bash
+# add a new script to your package.json file that will seed your database with initial data.
+ "seed": "node -r dotenv/config ./scripts/seed.js"
+
+ # Run the seed script
+npm run seed
+```
+
+
+## Chapter 7 - Fetching Data
+
+Now that you've created and seeded your database, let's discuss the different ways you can fetch data for your application, and build out your dashboard overview page.
+
+In this chapter... Here are the topics we’ll cover
+- Learn about some approaches to fetching data: APIs, ORMs, SQL, etc.
+- How Server Components can help you access back-end resources more securely.
+- What network waterfalls are.
+- How to implement parallel data fetching using a JavaScript Pattern.
