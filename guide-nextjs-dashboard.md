@@ -150,3 +150,20 @@ In this chapter...Here are the topics we’ll cover
 - How to use `eslint-plugin-jsx-a11y` with Next.js to implement accessibility best practices.
 - How to implement server-side form validation.
 - How to use the React useFormState hook to handle form errors, and display them to the user
+
+## Chapter 15 - Adding Authentication
+
+In this chapter...Here are the topics we’ll cover
+- What is authentication.
+- How to add authentication to your app using NextAuth.js.
+- How to use Middleware to redirect users and protect your routes.
+- How to use React's useFormStatus and useFormState to handle pending states and form errors.
+
+```sh
+npm install next-auth@beta
+
+# generate a secret key for your application
+openssl rand -base64 32
+# key : NEKCSPEiXPczefdFWyv3WnoArb6LKOpA0TUiO6bBC30=
+AUTH_SECRET=your-secret-key
+```
