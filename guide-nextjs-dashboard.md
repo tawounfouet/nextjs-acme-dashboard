@@ -116,3 +116,10 @@ In this chapter... Here are the topics we’ll cover
 - What dynamic rendering is and when to use it.
 - Different approaches to make your dashboard dynamic.
 - Simulate a slow data fetch to see what happens.
+
+
+## Chapter 11 - Adding Search and Pagination
+
+```sh
+npm i use-debounce
+```
