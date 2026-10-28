@@ -1,4 +1,4 @@
-const { db } = require('@vercel/postgres');
+const { Pool } = require('pg');
 const {
   invoices,
   customers,
@@ -60,7 +60,6 @@ async function seedInvoices(client) {
     date DATE NOT NULL
   );
 `;
-
     console.log(`Created "invoices" table`);
 
     // Insert data into the "invoices" table
@@ -161,14 +160,32 @@ async function seedRevenue(client) {
 }
 
 async function main() {
-  const client = await db.connect();
+  const pool = new Pool({
+    connectionString: process.env.POSTGRES_URL,
+    max: 5,
+    connectionTimeoutMillis: 5_000,
+    idleTimeoutMillis: 30_000,
+  });
+  const client = {
+    sql(strings, ...values) {
+      const text = strings.reduce(
+        (query, part, index) =>
+          `${query}${part}${index < values.length ? `$${index + 1}` : ''}`,
+        '',
+      );
 
-  await seedUsers(client);
-  await seedCustomers(client);
-  await seedInvoices(client);
-  await seedRevenue(client);
+      return pool.query(text, values);
+    },
+  };
 
-  await client.end();
+  try {
+    await seedUsers(client);
+    await seedCustomers(client);
+    await seedInvoices(client);
+    await seedRevenue(client);
+  } finally {
+    await pool.end();
+  }
 }
 
 main().catch((err) => {
@@ -176,4 +193,5 @@ main().catch((err) => {
     'An error occurred while attempting to seed the database:',
     err,
   );
+  process.exitCode = 1;
 });
