@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres';
+import { sql } from './db';
 import { unstable_noStore as noStore } from 'next/cache';
 
 import {
@@ -9,6 +9,7 @@ import {
   LatestInvoiceRaw,
   User,
   Revenue,
+  SupplierPage,
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -240,4 +241,30 @@ export async function getUser(email: string) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
   }
+}
+
+export async function fetchSuppliers(
+  offset = 0,
+  limit = 25,
+  query = '',
+): Promise<SupplierPage> {
+  noStore();
+  const apiUrl = process.env.PYSRMKIT_API_URL;
+  if (!apiUrl) {
+    throw new Error('PYSRMKIT_API_URL is required');
+  }
+  const url = new URL('/suppliers', apiUrl);
+  url.searchParams.set('offset', String(offset));
+  url.searchParams.set('limit', String(limit));
+  if (query) url.searchParams.set('query', query);
+
+  const response = await fetch(url, {
+    cache: 'no-store',
+    signal: AbortSignal.timeout(5_000),
+  });
+  if (!response.ok) {
+    throw new Error(`PySRMKit API returned ${response.status}`);
+  }
+
+  return response.json() as Promise<SupplierPage>;
 }

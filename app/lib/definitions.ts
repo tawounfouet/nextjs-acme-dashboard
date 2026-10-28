@@ -86,3 +86,26 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+export type SupplierExternalIdentifier = {
+  kind: string;
+  value: string;
+  source_system: string | null;
+  jurisdiction_code: string | null;
+};
+
+export type Supplier = {
+  supplier_id: string;
+  legal_name: string;
+  trading_name: string | null;
+  supplier_type: string | null;
+  country_code: string | null;
+  external_identifiers: SupplierExternalIdentifier[];
+};
+
+export type SupplierPage = {
+  items: Supplier[];
+  total: number;
+  offset: number;
+  limit: number;
+};
